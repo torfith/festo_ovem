@@ -1,6 +1,6 @@
 <launch>
 
-    <node pkg="festo_ovem" type="festo_ovem_node" name="festo_ovem_node" launch-prefix="ethercat_grant"> 
+    <node pkg="festo_ovem" type="festo_ovem_node" name="node" launch-prefix="ethercat_grant" ns="vacuum"> 
         <param name="interface_name" value="enp0s31f6" />
     </node>
 
