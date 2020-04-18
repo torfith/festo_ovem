@@ -20,7 +20,7 @@ int main(int argc, char **argv)
   em.monitor(); // create thread to handle slave errors in OP
   if (!em.open(ifName))
   {
-    ROS_ERROR("No socket connection on %s. Use launch-prefix=\"ethercat_grant\".\n", ifName.c_str());
+    ROS_FATAL("No socket connection on interface %s. Use launch-prefix=\"ethercat_grant\".\n", ifName.c_str());
     ros::shutdown();
   }
 
@@ -28,7 +28,7 @@ int main(int argc, char **argv)
   im.open(); // autodetect IO-Link master
   if (!im.open())
   {
-    ROS_ERROR("IO-Link master not found.\n");
+    ROS_FATAL("IO-Link master not found.\n");
     ros::shutdown();
   }
 
@@ -67,10 +67,11 @@ int main(int argc, char **argv)
           ROS_INFO("pressureBar: %f", pressure_msg.data);
         }
       }
+      else
+        ROS_ERROR("IO-Link Port X0%d: Device not available.\n", portName + 1);
+
       if (port.isDeviceError())
-      {
-        ROS_WARN("IO-Link Port X0%d Error Code: %x\n", portName, port.errorCode());
-      }
+        ROS_WARN("IO-Link Port X0%d: %s.\n", portName + 1, port.errorString().c_str());
     }
     ros::spinOnce();
 
