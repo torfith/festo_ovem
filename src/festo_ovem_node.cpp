@@ -32,7 +32,8 @@ int main(int argc, char **argv)
     ros::shutdown();
   }
 
-  iolink::Port port = im.port(iolink::PortName::X01);
+  iolink::PortName portName = iolink::PortName::X01;
+  iolink::Port port = im.port(portName);
   FestoOvem ovem(port);
  
   ros::Publisher isOutA_pub = nh.advertise<std_msgs::Bool>("is_out_a", 1);
@@ -65,6 +66,10 @@ int main(int argc, char **argv)
           ROS_INFO("isOutB: %d\n", ovem.isOutB());
           ROS_INFO("pressureBar: %f", pressure_msg.data);
         }
+      }
+      if (port.isDeviceError())
+      {
+        ROS_WARN("IO-Link Port X0%d Error Code: %x\n", portName, port.errorCode());
       }
     }
     ros::spinOnce();
