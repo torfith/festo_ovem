@@ -1,0 +1,2 @@
+#!/bin/sh
+rostopic pub /vacuum/set_suction_on std_msgs/Bool true --once

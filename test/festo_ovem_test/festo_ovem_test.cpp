@@ -1,7 +1,7 @@
 /** \file
- * \brief iolink_test based on example code for Simple Open EtherCAT master
+ * \brief festo_ovem_test based on example code for Simple Open EtherCAT master
  *
- * Usage : iolink_test [ifname1]
+ * Usage : festo_ovem_test [ifname1]
  * ifname is NIC interface, f.e. eth0
  *
  * This is a minimal test.
@@ -12,14 +12,13 @@
 
 #include <stdio.h>
 
-
 #include <ethercat/master.h>
 #include <iolink/master.h>
 #include <festo_ovem/festo_ovem.h>
 
 int main(int argc, char *argv[])
 {
-   printf("ethercat\nethercat test\n");
+   printf("festo_ovem\nFesto OVEM test\n");
 
    if (argc > 1)
    {
@@ -83,7 +82,7 @@ int main(int argc, char *argv[])
    }
    else
    {
-      printf("Usage: festo_ovem_test ifname1\nifname = eth0 for example\n");
+      printf("Usage: festo_ovem_test ifname\nifname = eth0 for example\n");
    }
 
    printf("End program\n");
