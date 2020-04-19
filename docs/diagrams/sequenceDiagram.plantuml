@@ -1,0 +1,76 @@
+@startuml
+actor User
+control Vacuum
+boundary FestoOvem
+boundary Iolink
+boundary Ethercat
+boundary soem
+== Initialization ==
+Vacuum -> Ethercat : << Master::monitor() >>
+activate Ethercat
+Vacuum -> Ethercat : Master::open(ifName)
+activate Ethercat
+    Ethercat -> soem : ec_init(ifName)
+    Ethercat -> soem : ec_config_init(FALSE)
+    Ethercat -> soem : set slave configuration
+    Ethercat -> soem : ec_config_map()
+    Ethercat -> Vacuum : success
+deactivate Ethercat
+
+Vacuum -> Iolink : Master::open()
+activate Iolink
+    Iolink -> Ethercat : Slave::open(IFM, AL1330)
+    activate Ethercat
+    Ethercat -> Iolink : success
+    deactivate Ethercat
+    Iolink -> Vacuum : success
+deactivate Iolink
+
+Vacuum -> Iolink : Master::port(X01)
+activate Iolink
+    Iolink -> Vacuum : port
+deactivate Iolink
+
+Vacuum -> FestoOvem : open(port)
+activate FestoOvem
+    FestoOvem -> Iolink : Device::open(port)
+    activate Iolink
+        Iolink -> FestoOvem : success
+    deactivate Iolink
+    FestoOvem -> Vacuum : success
+deactivate FestoOvem
+
+== Operation ==
+...
+User -> Vacuum : << pick() >>
+...
+loop
+Vacuum -> FestoOvem : setSuctionOn() 
+FestoOvem -> Iolink : set device.processDataOut()
+Iolink -> Ethercat : set slave.processDataOut()
+
+Vacuum -> Ethercat : spinOnce()
+activate Ethercat
+    Ethercat -> soem : ec_send_processdata()
+    Ethercat -> soem: ec_receive_processdata(EC_TIMEOUTRET)
+    activate soem
+    return
+    Ethercat -> Vacuum : succcess
+deactivate Ethercat
+
+Vacuum -> FestoOvem: pressure()
+FestoOvem -> Iolink : get device.processDataIn()
+Iolink -> Ethercat : get slave.processDataIn()
+
+Vacuum -> User : << pickPressure() >>
+Vacuum -> Vacuum : ros:spinOnce()
+Vacuum -> Vacuum : loop_rate.sleep()
+end
+Vacuum -> User : << isPicked() >>
+...
+User -> Vacuum : << drop() >>
+Vacuum -> FestoOvem : setSuctionOff()
+...
+Vacuum -> User : << isDropped() >>
+deactivate Ethercat
+@enduml
