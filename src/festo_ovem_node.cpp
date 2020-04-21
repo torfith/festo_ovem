@@ -27,7 +27,7 @@ int main(int argc, char **argv)
   ros::NodeHandle nh;
 
   std::string ifName;
-  nh.getParam("/festo_ovem_node/interface_name", ifName);
+  nh.getParam("/vacuum/node/interface_name", ifName);
 
   ethercat::Master em;
   em.monitor(); // create thread to handle slave errors in OP

@@ -1,4 +1,4 @@
 #!/bin/sh
 rostopic pub /vacuum/set_suction_on std_msgs/Bool false --once
-rostopic pub /vacuum/set_ejection_on std_msgs/Bool true --once
-rostopic pub /vacuum/set_ejection_on std_msgs/Bool false --once
+#rostopic pub /vacuum/set_ejection_on std_msgs/Bool true --once
+#rostopic pub /vacuum/set_ejection_on std_msgs/Bool false --once
