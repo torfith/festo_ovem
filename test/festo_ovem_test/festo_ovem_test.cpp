@@ -37,8 +37,8 @@ int main(int argc, char *argv[])
       {
          if (em.spinOnce())
          {
-            printf("Processdata cycle %4d, ", i);
-            em.printProcessData();
+            //printf("Processdata cycle %4d, ", i);
+            // em.printProcessData();
             if (port.isDeviceAvailable())
             {
                if (port.isInputValid())
@@ -46,9 +46,9 @@ int main(int argc, char *argv[])
                   printf("timeStampNs: %ld \n", port.timeStampNs());
                   printf("isOnDigitalInput2: %d \n", port.isOnDigitalInput2());
                   printf("isOnDigitalInput4: %d \n", port.isOnDigitalInput4());
-                  printf("O: %x ", port.processDataOut()[0]);
-                  printf("I: %x ", port.processDataIn()[0]);
-                  printf("%x \n", port.processDataIn()[1]);
+                  // printf("O: %x ", port.processDataOut()[0]);
+                  // printf("I: %x ", port.processDataIn()[0]);
+                  // printf("%x \n", port.processDataIn()[1]);
 
                   printf("isOutA: %d\n", ovem.isOutA());
                   printf("isOutB: %d\n", ovem.isOutB());
@@ -58,15 +58,19 @@ int main(int argc, char *argv[])
                   {
                   case 0:
                      ovem.setSuctionOn();
+                     printf("setSuctionOn\n");
                      break;
                   case 1:
                      ovem.setSuctionOff();
+                     printf("setSuctionOff\n");
                      break;
                   case 2:
                      ovem.setEjectionOn();
+                     printf("setEjectionOn\n");
                      break;
                   case 3:
                      ovem.setEjectionOff();
+                     printf("setEjectionOff\n");
                      break;
                   }
                }
