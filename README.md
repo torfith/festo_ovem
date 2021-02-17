@@ -24,7 +24,7 @@ Absolute pressure: -1...0 bar
 ### Launching node
 > $ roslaunch festo_ovem festo_ovem.launch [interface_name="enp3s0"]
 ### Simple operation 
-> $ rosrun festo_ovem pick
+> $ rosrun festo_ovem pick  
 > $ rosrun festo_ovem drop
 ## festo_ovem_test
 > $ sudo ~/catkin_ws/devel/lib/festo_ovem/festo_ovem_test enp3s0
