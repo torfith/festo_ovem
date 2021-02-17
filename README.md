@@ -20,7 +20,15 @@ Absolute pressure: -1...0 bar
 - vacuum/set_suction_on (std_msgs:Bool) 
 ### Parameters
 - interface_name (string)
-# Command-line tools
-## Usage
+## Command-line tools
+### Launching node
 > $ roslaunch festo_ovem festo_ovem.launch [interface_name="enp3s0"]
+### Simple operation 
+> $ rosrun festo_ovem pick
+> $ rosrun festo_ovem drop
+## festo_ovem_test
+> $ sudo ~/catkin_ws/devel/lib/festo_ovem/festo_ovem_test enp3s0
+## Note
+The nodes must be executed with root access to communicate via the EtherCAT interface.
+Root access is granted by specifying the launch-prefix="ethercat_grant" inside the launch file.
 
